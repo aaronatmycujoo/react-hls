@@ -7,7 +7,7 @@
 6 silly lifecycle webpack.react-hot-loader@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle webpack.react-hot-loader@1.0.0~start: webpack.react-hot-loader@1.0.0
 8 verbose lifecycle webpack.react-hot-loader@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle webpack.react-hot-loader@1.0.0~start: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/mnt/c/Users/Aaron/Projects/mtvc/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+9 verbose lifecycle webpack.react-hot-loader@1.0.0~start: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/mnt/c/Users/Aaron/Projects/mtvc/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/System32:/mnt/c/Windows:/mnt/c/Windows/System32/wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/Program Files/PuTTY:/mnt/c/Program Files/nodejs:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/Aaron/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Aaron/AppData/Local/atom/bin:/mnt/c/Users/Aaron/AppData/Roaming/npm
 10 verbose lifecycle webpack.react-hot-loader@1.0.0~start: CWD: /mnt/c/Users/Aaron/Projects/mtvc
 11 silly lifecycle webpack.react-hot-loader@1.0.0~start: Args: [ '-c', 'node browserSync.js' ]
 12 silly lifecycle webpack.react-hot-loader@1.0.0~start: Returned: code: 1  signal: null
