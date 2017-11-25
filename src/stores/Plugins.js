@@ -1,3 +1,5 @@
+import { observable, computed, action } from 'mobx'
+
 import '../plugins/PlayPause'
 
 export default class PluginsStore {

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
-import { observe, inject } from 'mobx'
-import { observer } from 'mobx-react'
+import { observable } from 'mobx'
+import { observer, inject } from 'mobx-react'
 
 @inject('PluginsStore')
 @observer

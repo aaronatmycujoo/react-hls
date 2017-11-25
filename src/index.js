@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { observable } from 'mobx'
 import { Provider, observer } from 'mobx-react'
 import Hls from 'hls.js'
 
@@ -7,31 +8,21 @@ import PluginsStore from './stores/Plugins'
 import InjectedPlugins from './components/InjectedPlugins'
 import HlsWrapper from './components/HlsWrapper'
 
-import styles from './index.css'
-
+const styles = {}
 @observer
 class ReactHls extends Component {
-    @observable isPaused = this.props.autoplay
+    @observable isPaused = true
     constructor(props) {
         super(props)
         this.hls = new Hls(this.props.hlsConfig)
 
-        PluginsStore.set(this.props.plugins)
-    }
-
-    componentWillReceiveProps(next) {
-        if (next.plugins !== this.matching) {
-            this.components = this.getComponents(next.matching)
-            if (this.listener) {
-                this.listener()
-            }
-            this.setUpListener()
-        }
+        this.props.plugins.forEach(({ component, role }) => PluginsStore.register(component, role))
     }
 
     render () {
-        const playerData = { url, poster, autoplay } = this.props
+        const { url, poster, autoplay } = this.props
 
+        const playerData = { url, poster, autoplay }
         const exposedProps = {
             isPaused: this.isPaused,
         }
@@ -70,18 +61,6 @@ class ReactHls extends Component {
             </Provider>
         )
     }
-}
-
-ReactHls.propTypes = {
-    url: PropTypes.string.isRequired,
-    autoplay: PropTypes.bool,
-    hlsConfig: PropTypes.object,
-    poster: PropTypes.string
-}
-
-ReactHls.defaultProps = {
-    autoplay: true,
-    hlsConfig: {},
 }
 
 export default ReactHls

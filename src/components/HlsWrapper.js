@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { Events } from 'hls.js'
 
 export default class HlsWrapper extends Component {
     componentDidMount() {
@@ -16,19 +17,17 @@ export default class HlsWrapper extends Component {
     init() {
         const { hls } = this.props
 
-        if (hls) { hls.destroy() }
-
-        const { url, hlsConfig, autoplay } = this.props
+        const { url, hlsConfig } = this.props
         const { video: $video } = this.refs
 
         hls.attachMedia($video)
-        hls.on(Hls.Events.MEDIA_ATTACHED, () => this.load(url))
+        hls.on(Events.MEDIA_ATTACHED, () => this.load(url))
     }
 
     load(url) {
-        const { hls } = this.props
+        const { hls, autoplay } = this.props
         hls.loadSource(url)
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        hls.on(Events.MANIFEST_PARSED, () => {
             if (autoplay) {
                 $video.play()
             }
