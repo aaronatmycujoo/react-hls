@@ -13,7 +13,10 @@ browserSync({
             webpackDevMiddleware(bundler, {
                 // IMPORTANT: dev middleware can't access config, so we should provide publicPath by ourselves
                 publicPath: webpackConfig.output.publicPath,
-                stats: { colors: true }
+                stats: {
+                    colors: true,
+                    errorDetails: true,
+                }
 
                 // for other settings see
                 // http://webpack.github.io/docs/webpack-dev-middleware.html

@@ -1,21 +1,12 @@
 import React, { Component, PropTypes } from 'react'
-import Hls from 'hls.js'
 
-class HlsWrapper extends Component {
-    constructor(props) {
-        super(props)
-        this.hls = null
-    }
-    componentDidUpdate () {
-        this.init()
-    }
-
-    componentDidMount () {
+export default class HlsWrapper extends Component {
+    componentDidMount() {
         this.init()
     }
 
     componentWillUnmount() {
-        let { hls } = this
+        const { hls } = this.props
 
         if (hls) {
             hls.destroy()
@@ -23,27 +14,29 @@ class HlsWrapper extends Component {
     }
 
     init() {
-        if (this.hls) {
-            this.hls.destroy()
-        }
+        const { hls } = this.props
 
-        let { url, hlsConfig, autoplay } = this.props
-        let { video : $video } = this.refs
+        if (hls) { hls.destroy() }
 
-        const hls = new Hls(hlsConfig)
-        hls.loadSource(url)
+        const { url, hlsConfig, autoplay } = this.props
+        const { video: $video } = this.refs
+
         hls.attachMedia($video)
+        hls.on(Hls.Events.MEDIA_ATTACHED, () => this.load(url))
+    }
+
+    load(url) {
+        const { hls } = this.props
+        hls.loadSource(url)
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
             if (autoplay) {
                 $video.play()
             }
         })
-
-        this.hls = hls
     }
 
     render () {
-        let { controls, poster } = this.props
+        const { controls, poster } = this.props
 
         return (
             <video
@@ -55,5 +48,3 @@ class HlsWrapper extends Component {
         )
     }
 }
-
-export default HlsWrapper
