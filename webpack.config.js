@@ -23,9 +23,12 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.jsx?$/,
-                exclude: /node_modules\/(?!(material-icons)\/).*/,
-                loaders: ['react-hot', 'babel'],
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loaders: [
+                    'react-hot',
+                    'babel'
+                ],
             },
             {
                 test: /\.css$/,

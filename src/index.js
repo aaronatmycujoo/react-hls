@@ -4,10 +4,12 @@ import { Provider, observer } from 'mobx-react'
 import Hls from 'hls.js'
 
 import PluginsStore from './stores/PluginsStore'
+import PlayerStore from './stores/PlayerStore'
 
 import InjectedPlugins from './components/InjectedPlugins'
 
 const pluginStore = new PluginsStore()
+const playerStore = new PlayerStore()
 
 const styles = {}
 
@@ -28,6 +30,7 @@ class ReactHls extends Component {
         hls.attachMedia(this.refs.video)
         hls.on(Hls.Events.MEDIA_ATTACHED, () => {
             hls.loadSource(url)
+            playerStore.attachMedia(hls.media)
             hls.on(Hls.Events.MANIFEST_PARSED, () => {
                 if (autoPlay) {
                     this.refs.video.play()
@@ -37,10 +40,6 @@ class ReactHls extends Component {
                 }
             })
         })
-    }
-
-    toggle = isPlaying => {
-        this.isPlaying = isPlaying
     }
 
     componentDidMount() {
@@ -62,7 +61,12 @@ class ReactHls extends Component {
         }
 
         return (
-            <Provider pluginStore={pluginStore} hls={this.hls} ReactHls={this}>
+            <Provider
+                pluginStore={pluginStore}
+                playerStore={playerStore}
+                hls={this.hls}
+                ReactHls={this}
+            >
                 <div key="reacthls" className={styles.root}>
                     <div className={styles.video}>
                         <video

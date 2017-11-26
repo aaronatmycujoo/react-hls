@@ -6,45 +6,31 @@ import {
     IconPause,
 } from 'material-icons/av'
 
-@inject(injectable => ({
-    hls: injectable.hls,
-    reacthls: injectable.ReactHls,
-}))
+@inject('playerStore')
 export default class PlayPause extends PureComponent {
 
     renderIcon(isPlaying) {
+        const { playerStore } = this.props
         if (isPlaying) {
-            return <IconPause />
+            return (
+                <IconPause
+                    key="pause"
+                    onClick={this.props.playStoggle.pause}
+                />
+            )
         } else {
-            return <IconPlayArrow />
-        }
-    }
-
-    isPlaying = () => {
-        const media = this.props.hls.media
-        if (media) {
-            return !!(media.currentTime > 0 && !media.paused && !media.ended && media.readyState > 2)
-        } else {
-            return false
-        }
-    }
-
-    toggle = () => {
-        console.log(this.props)
-        const media = this.props.hls.media
-        if (this.isPlaying()) {
-            media.pause()
-            this.props.reacthls.isPlaying = false
-        } else {
-            media.play()
-            this.props.reacthls.isPlaying = true
+            return (
+                <IconPlayArrow
+                    key="play"
+                    onClick={this.props.playStoggle.play}
+                />
+            )
         }
     }
 
     render() {
-        const { hls } = this.props
         return (
-            <div className="" key="play-pause" onClick={this.toggle}>
+            <div className="" key="play-pause">
                 {this.renderIcon(this.props.isPlaying)}
             </div>
         )
