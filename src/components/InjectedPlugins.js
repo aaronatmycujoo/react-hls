@@ -1,27 +1,26 @@
 import React, { PureComponent } from 'react'
-import { observable } from 'mobx'
+import { observable, observe } from 'mobx'
 import { observer, inject } from 'mobx-react'
 
-@inject('PluginsStore')
+@inject('pluginStore')
 @observer
 export default class InjectedPlugins extends PureComponent {
     @observable components = []
 
     getComponents = (matching) => {
-        const { PluginsStore } = this.props
-        this.components = PluginsStore.findPluginsMatching(matching)
+        const { pluginStore } = this.props
+        this.components = pluginStore.findPluginsMatching(matching)
     }
 
     componentDidMount() {
-        this.getComponents()
+        this.getComponents(this.props.matching)
         this.setUpListener()
     }
 
     setUpListener() {
-        const { PluginsStore, matching } = this.props
-        this.listener = observe(PluginsStore.plugins, change => {
-            console.log(change)
-            this.components = PluginsStore.findPluginsMatching(matching)
+        const { pluginStore, matching } = this.props
+        this.listener = observe(pluginStore.plugins, change => {
+            this.components = pluginStore.findPluginsMatching(matching)
         })
     }
 
@@ -33,7 +32,6 @@ export default class InjectedPlugins extends PureComponent {
 
     componentWillReceiveProps(next) {
         if (next.matching !== this.matching) {
-            this.components = this.getComponents(next.matching)
             if (this.listener) {
                 this.listener()
             }
@@ -44,11 +42,14 @@ export default class InjectedPlugins extends PureComponent {
     render() {
         const exposedProps = this.props.exposedProps || {}
         const elements = this.components.map(Component =>
-            <Component key={Component.displayName} {...exposedProps} />
+            <Component.component
+                key={Component.displayName}
+                {...exposedProps}
+            />
         )
 
         return (
-            <div className={this.props.className}>
+            <div className={this.props.className} key={this.props.matching}>
                 {elements}
             </div>
         )
