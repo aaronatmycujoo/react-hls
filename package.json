@@ -9,7 +9,7 @@
     "start": "node browserSync.js",
     "build": "webpack -p --config webpack.config.build.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
